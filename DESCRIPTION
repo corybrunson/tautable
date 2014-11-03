@@ -1,0 +1,21 @@
+Package: tautable
+Type: Package
+Title: Tables of critical values for Kendall's tau-a.
+Version: 1.0
+Date: 2014-11-02
+Authors@R: person('Jason Cory', 'Brunson', email = 'jabrunso@vt.edu',
+    role = c('aut', 'cre'))
+Maintainer: Jason Cory Brunson <brunson@uchc.edu>
+Description: The package consists of several basic functions for generating
+    tables of critical values for Kendall's rank correlation coefficient tau and
+    related test statistics by two means: reverse-determination using
+    implementions of tau (with p-values) on pairs of vectors (slow) and
+    construction from scratch using the recurrence relation for the Mahonian
+    numbers (fast).
+Depends:
+    R (>= 3.1.0),
+Imports:
+    
+Suggests:
+    Kendall
+License: GPL-2
