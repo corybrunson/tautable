@@ -2,6 +2,7 @@
 #' 
 #' @param vec A numerical vector (theoretically, with no repeated values).
 #' @return The number of pairs of entries *i* and *j* of \code{vec} for which *i* > *j*.
+#' @export
 #' @examples
 #' vec.inv(1:5)
 #' vec.inv(5:1)

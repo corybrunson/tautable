@@ -5,6 +5,7 @@
 #' @param incl.len Logical; whether to include a column of values of \code{n} (default to \code{FALSE}; the rows are named by the values of \code{n} in any case).
 #' @param stat A character string; any of several recognized test statistics (\code{'tau'}, \code{'concord*'}, , \code{'discord*'}, \code{'P'}, \code{'Q'}, \code{'K'}, \code{'k'}, \code{'inv'}, \code{'S'}).
 #' @return The number of permutations of \code{n} having \code{k} inversions, as \code{k} ranges from 0 to \code{n}.
+#' @export
 #' @examples
 #' tau.crit.table(n = 1:5, alpha = 10 ^ (-1:-3), incl.len = TRUE, stat = 'inv')
 #' tau.crit.table(n = 1:5, alpha = 10 ^ (-1:-3), incl.len = TRUE, stat = 'tau')

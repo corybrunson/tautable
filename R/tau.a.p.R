@@ -29,4 +29,3 @@ tau.a.p <- function(
     })
     return(as.data.frame(t(mat)))
 }
-

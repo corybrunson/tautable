@@ -14,8 +14,6 @@ Description: The package consists of several basic functions for generating
     numbers (fast).
 Depends:
     R (>= 3.1.0),
-Imports:
-    
 Suggests:
     Kendall
 License: GPL-2

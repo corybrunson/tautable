@@ -14,5 +14,3 @@ tau.a.crit <- function(n, alpha, stat = 'tau', ...) {
     })
     return(mat)
 }
-
-

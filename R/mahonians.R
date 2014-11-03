@@ -2,6 +2,7 @@
 #' 
 #' @param n A positive integer.
 #' @return The number of permutations of \code{n} having \code{k} inversions, as \code{k} ranges from 0 to \code{n}.
+#' @export
 #' @examples
 #' mahonians(1)
 #' mahonians(5)

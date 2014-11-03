@@ -4,6 +4,7 @@
 #' @param k A nonnegative integer at most \code{n}.
 #' @param bw.ok Logical; whether to allow exchanging large values of \code{k} for their duals to improve efficiency.
 #' @return A permutation of \code{n} having \code{k} (non-arbitrary) inversions.
+#' @export
 #' @examples
 #' inv.vec(n = 5, k = choose(5, 2))
 #' vec.inv(n = 5, k = 7)
