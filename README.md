@@ -9,7 +9,7 @@ Scripts to produce tables of critical values for Kendall's tau-a
 require(devtools)
 if(!require(tautable)) {
     install_github('corybrunson/tautable')
-    if(!require(taut able)) {
+    if(!require(tautable)) {
         stop('package is not available')
     }
 }
