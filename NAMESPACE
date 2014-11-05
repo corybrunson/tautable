@@ -2,6 +2,7 @@
 
 export(inv.vec)
 export(mahonians)
+export(mahonians.recursive)
 export(tau.crit.tab)
 export(tau.crit.table)
 export(vec.inv)
