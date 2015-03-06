@@ -4,7 +4,7 @@ author: "Cory Brunson"
 output: pdf_document
 ---
 
-Rank correlation takes place at the interface between statistics and combinatorics. Calculating rank correlation coefficients such as Kendall's \(\tau\) and Spearman's \(\rho\) is straightforward and, for small lists, fast; and the distributions for long lists rapidly approach their asymptotics. Kendall's \(\tau\) mimics Pearson's \(r\) by ranging from \(-1\) (perfect negative correlation) through \(0\) (perfect null correlation) to \(+1\) (perfect positive correlation) while remaining nonparametric--unlike \(\rho\), it makes no assumptions about the underlying distribution of values (if such values even exist) that the rankings reflect. Within the \(\tau\) framework, any of several equivalent statistics may be used to describe the (dis)similarity in two rankings of \(n\) objects, and each is easily recovered from the others: \(P\), the number of *concordant* pairs, or pairs of objects ranked the same relative to each other in both lists; \(Q\), the number of *discordant* pairs, so that \(P+Q={n\choose 2}\); \(S=P-Q\); and \(\tau={S}/{n\choose 2}\). (Ties are ignored in this discussion.)
+Rank correlation takes place at the interface between statistics and combinatorics. Calculating rank correlation coefficients such as Kendall's \(\tau\) and Spearman's $\rho$ is straightforward and, for small lists, fast; and the distributions for long lists rapidly approach their asymptotics. Kendall's \(\tau\) mimics Pearson's \(r\) by ranging from \(-1\) (perfect negative correlation) through \(0\) (perfect null correlation) to \(+1\) (perfect positive correlation) while remaining nonparametric--unlike \(\rho\), it makes no assumptions about the underlying distribution of values (if such values even exist) that the rankings reflect. Within the \(\tau\) framework, any of several equivalent statistics may be used to describe the (dis)similarity in two rankings of \(n\) objects, and each is easily recovered from the others: \(P\), the number of *concordant* pairs, or pairs of objects ranked the same relative to each other in both lists; \(Q\), the number of *discordant* pairs, so that \(P+Q={n\choose 2}\); \(S=P-Q\); and \(\tau={S}/{n\choose 2}\). (Ties are ignored in this discussion.)
 
 There are at least two extant and two apparently orphaned implementations of \(\tau\) in R: [the `kendall` option in the `cor` function] [1] (`stats` package) and the eponymous function in [the `Kendall` package] [2]; and `cor.fk` in [the `pcaPP` projection pursuit package] [3] and [the `kendall` method for the `rpucor` function](http://www.r-tutor.com/gpu-computing/correlation/kendall-rank-coefficient) in [the `rpud` NVIDIA package] [4]. While it's easy to compute \(\tau\) values and confidence intervals with these packages, though, i haven't come across a computational resource for critical values, or quartiles, of \(\tau\). That is, given \(n\) objects and a threshold \(p\), what is the level of concordance (or, equivalently, discordance) between two uniformly random rankings that occurs with probability less than \(p\), and what value \(\tau_{n,p}\) corresponds to this concordance? The normal asymptote \(\tau_{n,p}\approx\frac{\sqrt{2(2n+5)}}{3\sqrt{n(n-1)}}z_p\) (where \(Z\sim N(0,1)\)) [offers an approximate solution for large values of \(n\)](http://www.itl.nist.gov/div898/software/dataplot/refman1/auxillar/kend_tau.htm), but there will always be a place for exact answers if they're available.
 
@@ -276,13 +276,6 @@ As a final test, here are the runtimes for tables up to maximum \(n\) values of 
 
 ```r
 library(ggplot2)
-```
-
-```
-## Need help? Try the ggplot2 mailing list: http://groups.google.com/group/ggplot2.
-```
-
-```r
 library(microbenchmark)
 ```
 
