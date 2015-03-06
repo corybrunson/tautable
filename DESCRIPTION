@@ -1,6 +1,6 @@
 Package: tautable
 Type: Package
-Title: Tables of critical values for Kendall's tau-a.
+Title: Tables of critical values for Kendall's tau-a
 Version: 1.0
 Date: 2014-11-02
 Authors@R: person('Jason Cory', 'Brunson', email = 'jabrunso@vt.edu',
