@@ -12,8 +12,14 @@ Description: The package consists of several basic functions for generating
     implementions of tau (with p-values) on pairs of vectors (slow) and
     construction from scratch using the recurrence relation for the Mahonian
     numbers (fast).
-Depends:
+Depends: 
     R (>= 3.1.0),
-Suggests:
     Kendall
+Suggests: 
+    ggplot2,
+    microbenchmark,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 License: GPL-2
+RoxygenNote: 5.0.1

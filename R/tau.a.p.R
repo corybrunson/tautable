@@ -7,10 +7,11 @@
 #' @param tau.part The name of the tau element of the value of tau.fn.
 #' @param p.part The name of the p-value element of the value of tau.fn.
 #' @return For each entry of k, the corresponding value of tau and associated p-value.
+#' @export
 #' @examples
 #' tau.a.p(5, 0:5, sided = 1)
 #' tau.a.p(5, 5:10, sided = 1)
-#' tau.a.p(5, 0:5, tau.fn = Kendall, tau.part = 'tau', p.part = 'sl')
+#' tau.a.p(5, 0:5, tau.fn = Kendall::Kendall, tau.part = 'tau', p.part = 'sl')
 tau.a.p <- function(
     n, k = floor((choose(n, 2) / 2)):0, sided = 1,
     tau.fn = cor.test, tau.part = 'estimate', p.part = 'p.value', ...

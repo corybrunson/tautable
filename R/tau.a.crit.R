@@ -4,6 +4,7 @@
 #' @param alpha A vector of probabilities (preferably below .5).
 #' @param stat A character string; the name of the desired element returned by tau.a.p.
 #' @return For each entry of alpha, the least extreme test statistic whose p-value is smaller.
+#' @export
 #' @examples
 #' tau.a.crit(5, 10 ^ (-1:-3), stat = 'k')
 tau.a.crit <- function(n, alpha, stat = 'tau', ...) {

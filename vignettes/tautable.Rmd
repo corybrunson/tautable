@@ -1,7 +1,11 @@
 ---
-title: "tables of critical values for Kendall’s tau"
+title: "tables of critical values for Kendall's tau"
 author: "Cory Brunson"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tables of critical values for Kendall's tau}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 Rank correlation takes place at the interface between statistics and combinatorics. Calculating rank correlation coefficients such as Kendall's \(\tau\) and Spearman's \(\rho\) is straightforward and, for small lists, fast; and the distributions for long lists rapidly approach their asymptotics. Kendall's \(\tau\) mimics Pearson's \(r\) by ranging from \(-1\) (perfect negative correlation) through \(0\) (perfect null correlation) to \(+1\) (perfect positive correlation) while remaining nonparametric--unlike \(\rho\), it makes no assumptions about the underlying distribution of values (if such values even exist) that the rankings reflect. Within the \(\tau\) framework, any of several equivalent statistics may be used to describe the (dis)similarity in two rankings of \(n\) objects, and each is easily recovered from the others: \(P\), the number of *concordant* pairs, or pairs of objects ranked the same relative to each other in both lists; \(Q\), the number of *discordant* pairs, so that \(P+Q={n\choose 2}\); \(S=P-Q\); and \(\tau={S}/{n\choose 2}\). (Ties are ignored in this discussion.)
@@ -13,16 +17,16 @@ There are at least two extant and two apparently orphaned implementations of \(\
 [3]: http://cran.r-project.org/web/packages/pcaPP/pcaPP.pdf
 [4]: http://www.r-tutor.com/content/download
 
-```{r, results = 'hide', echo = FALSE, message = FALSE, warning = FALSE}
+```{r, results = "hide", echo = FALSE, message = FALSE, warning = FALSE}
 r <- getOption("repos")
 r["CRAN"] <- "http://my.local.cran"
 options(repos = r)
-pkgs <- c('stats', 'Kendall')
+pkgs <- c("stats", "Kendall")
 for(pkg in pkgs) {
     if(!require(pkg, character.only = TRUE)) {
         install.packages(pkg)
         if(!require(pkg, character.only = TRUE))
-            warning(paste('package', pkg, 'is not available'))
+            warning(paste("package", pkg, "is not available"))
     }
 }
 ```
@@ -35,7 +39,7 @@ To find a specific critical value using any of these implementations of \(\tau\)
 
 ```{r}
 # Count inversions in a vector
-vec.inv
+print(vec.inv)
 ```
 
 Whereas the identity has zero inversions, \(k\) here plays the role of \(Q\). (And, since \(\tau\) is symmetric, it's enough to consider \(k\) values from \(0\) to \(\left\lceil{n\choose 2}/{2}\right\rceil\).) To find such a permutation, recall (or [find out for yourself](), or just take my word for it) that the number of inversions of \(\pi\) equals the minimal length of a word for \(\pi\), and one minimal word for the longest permutation \(\pi_0=(n,n-1,\ldots,1)\) is
@@ -44,7 +48,7 @@ Therefore, a (highly non-arbitrary) permutation of length \(k\) obtains as the p
 
 ```{r}
 # Generate a permutation of 1:n having a given number k of inversions
-inv.vec
+print(inv.vec)
 ```
 
 From there it is quick work to whittle down the options. For example, if i want to know the "value to beat" for a type-I error \(p<.01\) on a one-sided test for positive correlation between two rankings of \(n=30\) objects using the `Kendall` package, i can run the following:
@@ -77,17 +81,17 @@ repeat {
     }
 }
 tau.K  <- round((choose(n, 2) - 2 * k) / choose(n, 2), 4)
-print(paste('need tau >', tau.K))
+print(paste("need tau >", tau.K))
 ```
 
-```{r, echo = FALSE, message = FALSE, result = 'hide', warning = FALSE}
+```{r, echo = FALSE, message = FALSE, result = "hide", warning = FALSE}
 n <- 30; p <- .01
 # range of revelant k (at most half of all possible discordant pairs)
 k.ran <- c(0, floor(choose(n, 2) / 2))
 # corresponding one-sided p-values
 p.ran <- sapply(k.ran, function(k) cor.test(x = 1:n, y = inv.vec(n, k),
-                                            alternative = 't',
-                                            method = 'kendall')$p.value / 2)
+                                            alternative = "t",
+                                            method = "kendall")$p.value / 2)
 # interpolate (linearly)
 repeat {
     if(p <= p.ran[1]) {
@@ -100,7 +104,7 @@ repeat {
     k <- round(q * diff(k.ran) + k.ran[1])
     if(k == k.ran[1]) k <- k + 1 else if(k == k.ran[2]) k <- k - 1
     k.p <- cor.test(x = 1:n, y = inv.vec(n, k),
-                    alternative = 't', method = 'kendall')$p.value / 2
+                    alternative = "t", method = "kendall")$p.value / 2
     if(k.p == p) break else if(k.p < p) {
         k.ran[1] <- k; p.ran[1] <- k.p
     } else if(k.p > p) {
@@ -113,7 +117,7 @@ repeat {
 tau.s  <- round((choose(n, 2) - 2 * k) / choose(n, 2), 4)
 ```
 
-This result disagrees slightly with the value 0.301 in [Peter M Lee's critical values table](http://www.york.ac.uk/depts/maths/tables/kendall.pdf), possibly due to error in `Kendall`, which cites [this algorithm by Best and Gipps](http://www.jstor.org/stable/2347062). The same procedure with `Kendall(...)$sl` exchanged for `cor.test(..., alternative = 't', method = 'kendall')$p.value`, which is exact for small \(n\) and computed for the asymptotic Z-score otherwise, yields a critical value of `r tau.s`.
+This result disagrees slightly with the value 0.301 in [Peter M Lee's critical values table](http://www.york.ac.uk/depts/maths/tables/kendall.pdf), possibly due to error in `Kendall`, which cites [this algorithm by Best and Gipps](http://www.jstor.org/stable/2347062). The same procedure with `Kendall(...)$sl` exchanged for `cor.test(..., alternative = "t", method = "kendall")$p.value`, which is exact for small \(n\) and computed for the asymptotic Z-score otherwise, yields a critical value of `r tau.s`.
 
 All this, however, makes for a very inefficient means to generate the titular table of critical values of \(\tau\). For that, rather than constructing a permutation of a desired length having a desired number of inversions, then iterating this construction over many lengths and inversion counts, it makes sense, provided it is possible, both
 
@@ -126,8 +130,8 @@ which implies that they satisfy a simple recursive formula:
 
 ```{r}
 # Compute the Mahonian numbers
-mahonians.recursive
-print(paste('Example: the Mahonian numbers for n = 5 are',
+print(mahonians.recursive)
+print(paste("Example: the Mahonian numbers for n = 5 are",
             toString(mahonians.recursive(5))))
 ```
 
@@ -135,7 +139,7 @@ This formula underlies the construction of a critical values table for \(\tau\) 
 
 ```{r}
 # Rapid table of critical values (n a vector, alpha a vector)
-tau.crit.table
+print(tau.crit.table)
 ```
 
 As an example, here are the critical values (of \(k\) and of \(\tau\)) for lengths at intervals of 10 up to 100 and type-I error thresholds at negative powers of 10:
@@ -146,7 +150,7 @@ example.n <- seq(10, 100, 10); example.alpha <- 10 ^ (-1:-4)
 # Critical value table for k
 inv.crit.vals <- tau.crit.table(n = example.n,
                               alpha = example.alpha,
-                              incl.len = TRUE, stat = 'inv')
+                              incl.len = TRUE, stat = "inv")
 print(inv.crit.vals)
 # Critical value table for tau
 tau.crit.vals <- tau.crit.table(n = example.n,
@@ -157,18 +161,16 @@ print(tau.crit.vals)
 
 The agreement of several rows with their analogs in [Lee's table](http://www.york.ac.uk/depts/maths/tables/kendall.pdf) validates the procedure; other tables exist for others of the equivalent statistics i mentioned above, e.g. [the number of concordant pairs](http://faculty.washington.edu/heagerty/Books/Biostatistics/TABLES/Kendall.pdf) and [the numerator \(S\)](http://books.google.com/books?id=IMbVyKoZRh8C&pg=PA691#v=onepage&q&f=false), which the interested reader can check for themselves. Most of these functions, and a few more, are available [in package form](https://github.com/corybrunson/tautable), in accordance with [the Leek Group's advice](https://github.com/jtleek/rpackages#when-to-start-writing-an-r-package).
 
-As a final test, here are the runtimes for tables up to maximum \(n\) values of 25 through 200 at intervals of 25, performed on a 3.2 GHz Intel Core i5, which hint at the slow combinatorial explosion that eventually undermines the usefulness of the method, though far beyond the point at which the normal approximaiton becomes adequate:
+As a final test, here are the runtimes for tables up to maximum \(n\) values of 25 through 200 at intervals of 25, which hint at the slow combinatorial explosion that eventually undermines the usefulness of the method, though far beyond the point at which the normal approximaiton becomes adequate:
 
-```{r}
-library(ggplot2)
-library(microbenchmark)
-mbm <- microbenchmark(
-    '50' = tau.crit.table(50, alpha = 10^(-1:-3)),
-    '100' = tau.crit.table(100, alpha = 10^(-1:-3)),
-    '150' = tau.crit.table(150, alpha = 10^(-1:-3)),
-    '200' = tau.crit.table(200, alpha = 10^(-1:-3)),
-    times = 2L
+```{r, warning = FALSE}
+mbm <- microbenchmark::microbenchmark(
+    "50" = tau.crit.table(50, alpha = 10^(-1:-3)),
+    "100" = tau.crit.table(100, alpha = 10^(-1:-3)),
+    "150" = tau.crit.table(150, alpha = 10^(-1:-3)),
+    "200" = tau.crit.table(200, alpha = 10^(-1:-3)),
+    times = 5L
 )
-autoplot(mbm)
+ggplot2::autoplot(mbm)
 ```
 

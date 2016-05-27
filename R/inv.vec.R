@@ -7,8 +7,8 @@
 #' @export
 #' @examples
 #' inv.vec(n = 5, k = choose(5, 2))
-#' vec.inv(n = 5, k = 7)
-#' vec.inv(n = 5, k = 7, bw.ok = FALSE)
+#' inv.vec(n = 5, k = 7)
+#' inv.vec(n = 5, k = 7, bw.ok = FALSE)
 inv.vec <- function(n, k, bw.ok = TRUE) {
     if(k > choose(n, 2) | k < 0 | any(c(n, k) %% 1 != 0)) stop('invalid n or k')
     backwards <- (k > choose(n, 2) / 2) & bw.ok
