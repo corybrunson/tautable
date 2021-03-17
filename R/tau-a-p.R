@@ -9,12 +9,12 @@
 #' @return For each entry of k, the corresponding value of tau and associated p-value.
 #' @export
 #' @examples
-#' tau.a.p(5, 0:5, sided = 1)
-#' tau.a.p(5, 5:10, sided = 1)
-#' tau.a.p(5, 0:5, tau.fn = Kendall::Kendall, tau.part = 'tau', p.part = 'sl')
-tau.a.p <- function(
+#' tau_a_p(5, 0:5, sided = 1)
+#' tau_a_p(5, 5:10, sided = 1)
+#' tau_a_p(5, 0:5, tau.fn = Kendall::Kendall, tau.part = "tau", p.part = "sl")
+tau_a_p <- function(
     n, k = floor((choose(n, 2) / 2)):0, sided = 1,
-    tau.fn = cor.test, tau.part = 'estimate', p.part = 'p.value', ...
+    tau.fn = cor.test, tau.part = "estimate", p.part = "p.value", ...
 ) {
     # All tests are two-sided; need to adjust the results for one-sided pvals
     stopifnot(sided %in% 1:2)

@@ -2,16 +2,17 @@
 #' 
 #' @param n A positive integer.
 #' @param k A nonnegative integer at most \code{n}.
-#' @param bw.ok Logical; whether to allow exchanging large values of \code{k} for their duals to improve efficiency.
+#' @param allow.dual Logical; whether to allow exchanging large values of
+#'   \code{k} for their duals to improve efficiency.
 #' @return A permutation of \code{n} having \code{k} (non-arbitrary) inversions.
 #' @export
 #' @examples
-#' inv.vec(n = 5, k = choose(5, 2))
-#' inv.vec(n = 5, k = 7)
-#' inv.vec(n = 5, k = 7, bw.ok = FALSE)
-inv.vec <- function(n, k, bw.ok = TRUE) {
+#' inv_vec(n = 5, k = choose(5, 2))
+#' inv_vec(n = 5, k = 7)
+#' inv_vec(n = 5, k = 7, allow.dual = FALSE)
+inv_vec <- function(n, k, allow.dual = TRUE) {
     if(k > choose(n, 2) | k < 0 | any(c(n, k) %% 1 != 0)) stop('invalid n or k')
-    backwards <- (k > choose(n, 2) / 2) & bw.ok
+    backwards <- (k > choose(n, 2) / 2) & allow.dual
     if(backwards) k <- choose(n, 2) - k
     vec <- 1:n; ninv <- 0
     while(ninv < k) {
@@ -23,7 +24,7 @@ inv.vec <- function(n, k, bw.ok = TRUE) {
         ninv <- ninv + {
             if(k - ninv < n - i) (k - ninv) else (n - i)
         }
-        stopifnot(ninv == vec.inv(vec))
+        stopifnot(ninv == vec_inv(vec))
     }
     if(backwards) vec <- rev(vec)
     return(vec)
