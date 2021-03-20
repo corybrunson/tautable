@@ -1,17 +1,18 @@
 #' Generate a permutation of a given length having a given number of inversions
-#' 
+#'
 #' @param n A positive integer.
-#' @param k A nonnegative integer at most \code{n}.
-#' @param allow.dual Logical; whether to allow exchanging large values of
-#'   \code{k} for their duals to improve efficiency.
-#' @return A permutation of \code{n} having \code{k} (non-arbitrary) inversions.
+#' @param k A nonnegative integer at most `n`.
+#' @param allow.dual Logical; whether to allow exchanging large values of `k`
+#'   for their duals to improve efficiency.
+#' @return A permutation of `n` having `k` (non-arbitrary) inversions.
 #' @export
 #' @examples
 #' inv_vec(n = 5, k = choose(5, 2))
 #' inv_vec(n = 5, k = 7)
 #' inv_vec(n = 5, k = 7, allow.dual = FALSE)
 inv_vec <- function(n, k, allow.dual = TRUE) {
-    if(k > choose(n, 2) | k < 0 | any(c(n, k) %% 1 != 0)) stop('invalid n or k')
+    if(k > choose(n, 2) | k < 0 | any(c(n, k) %% 1 != 0))
+      stop("Invalid values of `n` and `k`.")
     backwards <- (k > choose(n, 2) / 2) & allow.dual
     if(backwards) k <- choose(n, 2) - k
     vec <- 1:n; ninv <- 0

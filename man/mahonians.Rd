@@ -10,7 +10,8 @@ mahonians(n)
 \item{n}{A positive integer.}
 }
 \value{
-The number of permutations of \code{n} having \code{k} inversions, as \code{k} ranges from 0 to \code{n}.
+The number of permutations of \code{n} having \code{k} inversions, as \code{k}
+ranges from 0 to \code{n}.
 }
 \description{
 Compute the Mahonian numbers.
@@ -19,4 +20,3 @@ Compute the Mahonian numbers.
 mahonians(1)
 mahonians(5)
 }
-

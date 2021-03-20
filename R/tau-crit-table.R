@@ -1,25 +1,26 @@
 #' Rapidly generate a table of critical values of tau or an equivalent test
 #' statistic.
-#' 
+#'
 #' @param n A vector of positive integers.
 #' @param alpha A vector of probabilities (preferably below .5).
-#' @param incl.len Logical; whether to include a column of values of \code{n}
-#'   (default to \code{FALSE}; the rows are named by the values of \code{n} in
-#'   any case).
+#' @param incl.len Logical; whether to include a column of values of `n`
+#'   (default to `FALSE`; the rows are named by the values of `n` in any case).
 #' @param stat A character string; any of several recognized test statistics
-#'   (\code{"tau"}, \code{"concord*"}, , \code{"discord*"}, \code{"P"},
-#'   \code{"Q"}, \code{"K"}, \code{"k"}, \code{"inv"}, \code{"S"}).
-#' @return The number of permutations of \code{n} having \code{k} inversions, as
-#'   \code{k} ranges from 0 to \code{n}.
+#'   (`"tau"`, `"concord*"`, , `"discord*"`, `"P"`, `"Q"`, `"K"`, `"k"`,
+#'   `"inv"`, `"S"`).
+#' @return The number of permutations of `n` having `k` inversions, as `k`
+#'   ranges from 0 to `n`.
 #' @export
 #' @examples
 #' tau_crit_table(n = 1:5, alpha = 10 ^ (-1:-3), incl.len = TRUE, stat = "inv")
 #' tau_crit_table(n = 1:5, alpha = 10 ^ (-1:-3), incl.len = TRUE, stat = "tau")
 tau_crit_table <- function(n, alpha, incl.len = TRUE, stat = "tau") {
-    if(any(n <= 0 | n %% 1 != 0)) stop("n must be a positive integer")
-    if(any(alpha > .5 | alpha <= 0)) stop("alpha must be positive and below .5")
+    if(any(n <= 0 | n %% 1 != 0))
+      stop("`n` must be a positive integer.")
+    if(any(alpha > .5 | alpha <= 0))
+      stop("`alpha`` must be positive and below .5")
     vec <- 1; m <- 1; max.n <- max(n)
-    mat <- matrix(NA, nr = if(min(n) == 1) 1 else 0, nc = length(alpha))
+    mat <- matrix(NA, nrow = if(min(n) == 1) 1 else 0, ncol = length(alpha))
     while(max.n > m) {
         # Update Mahonian vector
         vec <- rowSums(sapply(0:m, function(i) {

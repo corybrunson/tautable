@@ -4,7 +4,8 @@
 #' @param n A positive integer.
 #' @param alpha A vector of probabilities (preferably below .5).
 #' @param stat A character string; the name of the desired element returned by
-#'   \code{tau_a_p}.
+#'   [tau_a_p()].
+#' @param ... Additional parameters passed to [tau_a_p()].
 #' @return For each entry of alpha, the least extreme test statistic whose
 #'   p-value is smaller.
 #' @export

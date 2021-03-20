@@ -1,7 +1,7 @@
 #' Count the inversions in a vector.
 #' 
 #' @param vec A numerical vector (theoretically, with no repeated values).
-#' @return The number of pairs of entries i and j of \code{vec} for which
+#' @return The number of pairs of entries i and j of `vec` for which
 #'   i > j.
 #' @export
 #' @examples

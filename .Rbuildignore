@@ -1,0 +1,9 @@
+# R project files
+^.*\.Rproj$
+^\.Rproj\.user$
+LICENSE
+
+# custom
+sandbox
+^doc$
+^Meta$
