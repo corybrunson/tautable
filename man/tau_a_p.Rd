@@ -21,7 +21,8 @@ tau_a_p(
 
 \item{sided}{Number of sides to a test; either 1 or 0.}
 
-\item{tau.fn}{A function that computes elements tau and p-value from a pair of vectors.}
+\item{tau.fn}{A function that computes elements tau and p-value from a pair
+of vectors.}
 
 \item{tau.part}{The name of the tau element of the value of tau.fn.}
 
@@ -30,7 +31,8 @@ tau_a_p(
 \item{...}{Additional parameters passed to \code{tau.fn}.}
 }
 \value{
-For each entry of k, the corresponding value of tau and associated p-value.
+For each entry of k, the corresponding value of tau and associated
+p-value.
 }
 \description{
 Tabulate tau and p-values for a given length and number of inversions.

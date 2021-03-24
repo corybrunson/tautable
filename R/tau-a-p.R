@@ -1,14 +1,16 @@
 #' Tabulate tau and p-values for a given length and number of inversions.
-#' 
+#'
 #' @importFrom Kendall Kendall
 #' @param n A positive integer.
 #' @param k A vector of nonnegative integers at most `n`.
 #' @param sided Number of sides to a test; either 1 or 0.
-#' @param tau.fn A function that computes elements tau and p-value from a pair of vectors.
+#' @param tau.fn A function that computes elements tau and p-value from a pair
+#'   of vectors.
 #' @param tau.part The name of the tau element of the value of tau.fn.
 #' @param p.part The name of the p-value element of the value of tau.fn.
 #' @param ... Additional parameters passed to `tau.fn`.
-#' @return For each entry of k, the corresponding value of tau and associated p-value.
+#' @return For each entry of k, the corresponding value of tau and associated
+#'   p-value.
 #' @export
 #' @examples
 #' tau_a_p(5, 0:5, sided = 1)
